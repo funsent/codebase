@@ -45,6 +45,31 @@ const Fn = {
         }
     },
 
+
+            // 防抖
+            debounce2：function (func, wait = 0) {
+                if (typeof func !== 'function') {
+                    throw new TypeError('need a function arguments')
+                }
+                let timeid = null;
+                let result;
+
+
+                return function() {
+                    let context = this;
+                    let args = arguments;
+
+                    if (timeid) {
+                        clearTimeout(timeid);
+                    }
+                    timeid = setTimeout(function() {
+                        result = func.apply(context, args);
+                    }, wait);
+
+                    return result;　
+                }
+            }，
+
     /**
      * 防抖 改进版本
      * 改进版本添加是否立即执行的参数，因为有些场景下，我们希望函数能立即执行
